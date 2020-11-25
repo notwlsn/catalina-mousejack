@@ -1,6 +1,6 @@
 # MouseJack Exploitation on Catalina 10.15.5
 
-## The exploit
+## The Exploit
 I had a lot of fun recently exploiting the now old MouseJack vulnerabilities. Essentially this exploit is the result of unifying USB recievers sending unencrypted data between mouse (or other peripheral) and computer. More can be read about it here. (https://www.mousejack.com)
 
 ## Hardware
@@ -10,7 +10,7 @@ To perform this exploit you need hardware that is specially crafted to send and 
 First, obtain the firmware from here (https://github.com/BastilleResearch/mousejack) and build it. They have a tutorial that is pretty good so I would follow that. This takes care of flashing the stock Crazyradio firmware for you as long as you initialize the git submodule `nrf-research-firmware` and follow their steps. 
 
 ## Changes for Catalina (and OSX)
-Basically when you try to make the firmware within `nrf-research-firmware` you will probably come up on failure for a few reasons. Your error will probably look something like this:
+Basically when you try to build the firmware within `nrf-research-firmware` you will probably come up on failure for a few reasons. Your error will probably look something like this:
 
 ```
 usage: grep [-abcDEFGHhIiJLlmnOoqRSsUVvwxZ] [-A num] [-B num] [-C[num]]
