@@ -1,13 +1,13 @@
 # MouseJack Exploitation on Catalina 10.15.5
 
 ## The Exploit
-I had a lot of fun recently exploiting the now old MouseJack vulnerabilities. Essentially this exploit is the result of unifying USB recievers sending unencrypted data between mouse (or other peripheral) and computer. More can be read about it here. (https://www.mousejack.com)
+I had a lot of fun recently exploiting the now old MouseJack vulnerabilities. Essentially this exploit is the result of unifying USB recievers sending unencrypted data between mouse (or other peripheral) and computer. More can be read about it [here.](https://www.mousejack.com)
 
 ## Hardware
-To perform this exploit you need hardware that is specially crafted to send and recieve radio signals. There's a good USB radio dongle on Amazon made by Crazyradio PA that is ideal for this (https://www.amazon.com/gp/product/B00VYA3A2U/ref=ppx_yo_dt_b_asin_title_o01_s00?ie=UTF8&psc=1). I used this board, but you can technically do this with a Logitech Unifying dongle (ones that are based on C-U0007 Nordic Semiconductors) or other nRF24LU1+ chips like the SparkFun's breakout board. The advantage of the Crazyradio one for me was it has a factory programmer bootloader already installed in the top 2KB of flash, which is really conveninent. 
+To perform this exploit you need hardware that is specially crafted to send and recieve radio signals. There's a good USB radio dongle on [Amazon](https://www.amazon.com/gp/product/B00VYA3A2U/ref=ppx_yo_dt_b_asin_title_o01_s00?ie=UTF8&psc=1) made by Crazyradio PA that is ideal for this. I used this board, but you can technically do this with a Logitech Unifying dongle (ones that are based on C-U0007 Nordic Semiconductors) or other nRF24LU1+ chips like the SparkFun's breakout board. The advantage of the Crazyradio one for me was it has a factory programmer bootloader already installed in the top 2KB of flash, which is really conveninent. 
 
 ## Setup
-First, obtain the firmware from here (https://github.com/BastilleResearch/mousejack) and build it. They have a tutorial that is pretty good so I would follow that. This takes care of flashing the stock Crazyradio firmware for you as long as you initialize the git submodule `nrf-research-firmware` and follow their steps. 
+First, obtain the firmware from [here](https://github.com/BastilleResearch/mousejack) and build it. They have a tutorial that is pretty good so I would follow that. This takes care of flashing the stock Crazyradio firmware for you as long as you initialize the git submodule `nrf-research-firmware` and follow their steps. 
 
 ## Changes for Catalina (and OSX)
 Basically when you try to build the firmware within `nrf-research-firmware` you will probably come up on failure for a few reasons. Your error will probably look something like this:
@@ -29,7 +29,7 @@ make: objcopy: No such file or directory
 make: *** [dongle.bin] Error 1
 ```
 
-First, make sure you're using `sudo`, but more importantly Mac has no `objcopy` or `objdump`, which is a problem. Luckily there are equivalents. First, install `crosstools-ng` from Brew, `brew install crosstool-ng`. This will install what is basically a Linux toolchain for software development - that is to say, it's a bunch of small programs. Some are binaries and others are static libraries. Within this **used** to be an `objcopy` equivalent called `gobjdump` (https://pigiuz.wordpress.com/2013/09/12/resolving-symbols-conflict-between-libraries-on-osx-with-objcopy/). Now, it's apparently deprecated and we'll need to use the (largely undocumented on brew) `sdobjcopy`. All this requires is installing the `crosstools-ng` package from brew or MacPorts and changing the `nrf-research-firmware` Makefile.
+First, make sure you're using `sudo`, but more importantly Mac has no `objcopy` or `objdump`, which is a problem. Luckily there are equivalents. First, install `crosstools-ng` from Brew, `brew install crosstool-ng`. This will install what is basically a Linux toolchain for software development - that is to say, it's a bunch of small programs. Some are binaries and others are static libraries. Within this **used** to be an `objcopy` equivalent called [`gobjdump`](https://pigiuz.wordpress.com/2013/09/12/resolving-symbols-conflict-between-libraries-on-osx-with-objcopy/). Now, it's apparently deprecated and we'll need to use the (largely undocumented on brew) `sdobjcopy`. All this requires is installing the `crosstools-ng` package from brew or MacPorts and changing the `nrf-research-firmware` Makefile.
 
 Let's change these lines:
 
